@@ -99,9 +99,9 @@ export default class ImageViewer extends Component{
 
         this.imagePanResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => true,
-            onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+            onStartShouldSetPanResponderCapture: (evt, gestureState) => false,
             onMoveShouldSetPanResponder: (evt, gestureState) => true,
-            onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
+            onMoveShouldSetPanResponderCapture: (evt, gestureState) => false,
             //to trigger multiple touches, this method should return false
             onPanResponderTerminationRequest: (evt, gestureState) => false,
 
@@ -356,9 +356,9 @@ export default class ImageViewer extends Component{
                                     { translateX: animatedX}
                                 ]}}> */}
                                 <CachedImage
-                                    // onLayout={(e) => {
-                                    //     this.layoutImage[index] = e.nativeEvent.layout;
-                                    // }}
+                                    onLayout={(e) => {
+                                        this.layoutImage[index] = e.nativeEvent.layout;
+                                    }}
                                     style={{width: width, height: height}}
                                     key={index}
                                     source={{uri:imageUrl}}/>
