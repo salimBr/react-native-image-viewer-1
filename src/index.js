@@ -355,7 +355,7 @@ export default class ImageViewer extends Component{
                                     { scale: scalable},
                                     { translateX: animatedX}
                                 ]}}> */}
-                                <CachedImage
+                                <Image
                                     onLayout={(e) => {
                                         this.layoutImage[index] = e.nativeEvent.layout;
                                     }}
@@ -448,7 +448,7 @@ export default class ImageViewer extends Component{
                     }]}>
                         { this.state.imagesInfo.length > 0 ? this.getImageList() : null}
                     </Animated.View>
-                    {/* {
+                    {
                         !this.state.imageLoaded ?
                             <View style={viewer.loading}>
                                 <View style={[viewer.common,viewer.outer]}></View>
@@ -458,7 +458,7 @@ export default class ImageViewer extends Component{
                                     ]
                                 }]}></Animated.View>
                             </View> : null
-                    } */}
+                    }
                 </Animated.View>
             </Modal>
         )
