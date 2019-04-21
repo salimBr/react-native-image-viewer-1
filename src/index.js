@@ -15,6 +15,11 @@ import {
     Animated,
     TouchableOpacity
 } from 'react-native';
+import {
+    CachedImage,
+    ImageCacheProvider
+  } from 'react-native-cached-image';
+  import Icon from 'react-native-vector-icons/Feather';
 
 /**
  * the width & height of screen
@@ -337,26 +342,27 @@ export default class ImageViewer extends Component{
             switch (imageInfo.status){
                 case 'loading':
                     return (
-                        <View style={viewer.loadingImgView} key={index}>
-                            <Image style={viewer.loadingImg}
-                                   source={{uri: imageUrl}}/>
+                        <View style={viewer.loadedImg} key={index}>
+                            {/* <Image style={viewer.loadingImg}
+                                   source={{uri: imageUrl}}/> */}
                         </View>
                     );
                 case 'success':
                     return (
                         <View style={viewer.loadedImg} key={index}>
-                            <Animated.View
+                            {/* <Animated.View
                                 style={{width: width, height: height,transform:[
                                     { scale: scalable},
                                     { translateX: animatedX}
-                                ]}}>
-                                <Image
-                                    onLayout={(e) => {
-                                        this.layoutImage[index] = e.nativeEvent.layout;
-                                    }}
+                                ]}}> */}
+                                <CachedImage
+                                    // onLayout={(e) => {
+                                    //     this.layoutImage[index] = e.nativeEvent.layout;
+                                    // }}
                                     style={{width: width, height: height}}
+                                    key={index}
                                     source={{uri:imageUrl}}/>
-                            </Animated.View>
+                            {/* </Animated.View> */}
                         </View>
 
                     );
@@ -388,14 +394,14 @@ export default class ImageViewer extends Component{
         Animated.parallel([
             Animated.timing(this.state.fadeAnim, {
                 toValue: 0,
-                duration: 200,
+                duration: 30,
                 easing: Easing.linear
             }),
-            Animated.timing(this.state.scalable,{
-                toValue: 0,
-                duration: 200,
-                easing: Easing.linear
-            })
+            // Animated.timing(this.state.scalable,{
+            //     toValue: 0,
+            //     duration: 10,
+            //     easing: Easing.linear
+            // })
         ]).start(()=>{
             this.setState({
                loadImgSuccess:false
@@ -413,7 +419,7 @@ export default class ImageViewer extends Component{
         });
 
         return (
-            <Modal visible={shown} transparent={true} animationType={"none"} onRequestClose={this.modalDismissed.bind(this)} >
+            <Modal visible={shown} transparent={false} animationType={"none"} onRequestClose={this.modalDismissed.bind(this)} >
                 <Animated.View style={[viewer.titleBar,{
                     opacity:this.state.fadeAnim
                 }]}>
@@ -421,9 +427,10 @@ export default class ImageViewer extends Component{
                         {(this.state.curIndex + 1)} / {this.props.imageUrls.length}
                     </Text>
                     <TouchableOpacity activeOpacity={1} style={viewer.backBtn} onPress={this.back.bind(this)}>
-                        <View style={[viewer.btnIcon, { transform: [{
+                        <Icon name="x" size={30} color="#fff" />
+                        {/* <View style={[viewer.btnIcon, { transform: [{
                             rotate: '-45deg'
-                        }] }]}></View>
+                        }] }]}></View> */}
                     </TouchableOpacity>
                 </Animated.View>
                 <Animated.View
@@ -441,7 +448,7 @@ export default class ImageViewer extends Component{
                     }]}>
                         { this.state.imagesInfo.length > 0 ? this.getImageList() : null}
                     </Animated.View>
-                    {
+                    {/* {
                         !this.state.imageLoaded ?
                             <View style={viewer.loading}>
                                 <View style={[viewer.common,viewer.outer]}></View>
@@ -451,7 +458,7 @@ export default class ImageViewer extends Component{
                                     ]
                                 }]}></Animated.View>
                             </View> : null
-                    }
+                    } */}
                 </Animated.View>
             </Modal>
         )
